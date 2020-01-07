@@ -1,13 +1,13 @@
 {
-  "name": "@react-select/monorepo",
-  "private": true,
-  "version": "1.0.0",
+  "name": "react-select-nested-group",
+  "private": false,
+  "version": "1.0.1",
   "description": "A Select control built with and for ReactJS",
   "author": "Jed Watson",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JedWatson/react-select.git"
+    "url": "git+https://github.com/JedWatson/react-select.git"
   },
   "dependencies": {
     "@atlaskit/button": "^7.0.2",
@@ -140,5 +140,14 @@
   "browser": {
     "./dist/react-select.cjs.js": "./dist/react-select.browser.cjs.js",
     "./dist/react-select.esm.js": "./dist/react-select.browser.esm.js"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/JedWatson/react-select/issues"
+  },
+  "homepage": "https://github.com/JedWatson/react-select#readme",
+  "main": ".eslintrc.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {}
 }
