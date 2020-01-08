@@ -8,12 +8,6 @@ import { groupedOptions } from '../data';
 import { Li, Ul } from '../styled-components';
 
 import Select from '../../packages/react-select/src';
-import type { InnerRef } from '../../packages/react-select/src/types';
-
-const Span = ({ css, innerRef, ...props }: {
-  css?: {},
-  innerRef?: InnerRef,
-}) => <span ref={innerRef} css={css} {...props} />;
 
 const Group = (props) => {
   const { children, getStyles, Heading, innerProps, label } = props;
@@ -83,10 +77,10 @@ const GroupHeading = (props) => {
   const styles = getGroupHeadingStyles({ isSelected, isDisabled })(defaultStyles);
 
   return (
-    <Span css={styles} onClick={isDisabled ? null : toggleGroup}>
+    <span onClick={isDisabled ? null : toggleGroup} style={styles}>
       <input readOnly type="checkbox" checked={isSelected}/>
       {label}
-    </Span>
+    </span>
   );
 
 };
@@ -102,10 +96,10 @@ const Option = props => {
   const defaultStyles = getStyles('option', props);
   const styles = getOptionStyles(defaultStyles);
   return (
-    <Span {...innerProps} css={styles}>
+    <span {...innerProps} style={styles}>
       <input type="checkbox" checked={isSelected} readOnly/>
       {children}
-    </Span>
+    </span>
   );
 };
 
