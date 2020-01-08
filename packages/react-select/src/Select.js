@@ -6,38 +6,28 @@ import { MenuPlacer } from './components/Menu';
 import isEqual from './internal/react-fast-compare';
 
 import { createFilter } from './filters';
+import { A11yText, DummyInput, ScrollBlock, ScrollCaptor, } from './internal/index';
 import {
-  A11yText,
-  DummyInput,
-  ScrollBlock,
-  ScrollCaptor,
-} from './internal/index';
-import {
-  valueFocusAriaMessage,
+  instructionsAriaMessage,
+  type InstructionsContext,
   optionFocusAriaMessage,
   resultsAriaMessage,
   valueEventAriaMessage,
-  instructionsAriaMessage,
-  type InstructionsContext,
   type ValueEventContext,
+  valueFocusAriaMessage,
 } from './accessibility/index';
 
 import {
   classNames,
   cleanValue,
-  isTouchCapable,
+  isDocumentElement,
   isMobileDevice,
+  isTouchCapable,
   noop,
   scrollIntoView,
-  isDocumentElement,
 } from './utils';
 
-import {
-  formatGroupLabel,
-  getOptionLabel,
-  getOptionValue,
-  isOptionDisabled,
-} from './builtins';
+import { formatGroupLabel, getOptionLabel, getOptionValue, isOptionDisabled, } from './builtins';
 
 import {
   defaultComponents,
@@ -54,6 +44,7 @@ import type {
   ActionTypes,
   FocusDirection,
   FocusEventHandler,
+  MenuOptions,
   GroupType,
   InputActionMeta,
   KeyboardEventHandler,
@@ -285,10 +276,6 @@ export const defaultProps = {
   tabSelectsValue: true,
 };
 
-type MenuOptions = {
-  render: Array<OptionType>,
-  focusable: Array<OptionType>,
-};
 
 type State = {
   ariaLiveSelection: string,
@@ -362,6 +349,7 @@ export default class Select extends Component<Props, State> {
     super(props);
     const { value } = props;
     this.cacheComponents = memoizeOne(this.cacheComponents, isEqual).bind(this);
+    this.isOptionSelected = memoizeOne(this.isOptionSelected, isEqual).bind(this);
     this.cacheComponents(props.components);
     this.instancePrefix =
       'react-select-' + (this.props.instanceId || ++instanceId);
@@ -374,6 +362,7 @@ export default class Select extends Component<Props, State> {
     this.state.menuOptions = menuOptions;
     this.state.selectValue = selectValue;
   }
+
   componentDidMount() {
     this.startListeningComposition();
     this.startListeningToTouch();
@@ -387,6 +376,7 @@ export default class Select extends Component<Props, State> {
       this.focusInput();
     }
   }
+
   UNSAFE_componentWillReceiveProps(nextProps: Props) {
     const { options, value, menuIsOpen, inputValue } = this.props;
     // re-cache custom components
@@ -414,6 +404,7 @@ export default class Select extends Component<Props, State> {
       delete this.inputIsHiddenAfterUpdate;
     }
   }
+
   componentDidUpdate(prevProps: Props) {
     const { isDisabled, menuIsOpen } = this.props;
     const { isFocused } = this.state;
@@ -437,11 +428,13 @@ export default class Select extends Component<Props, State> {
     }
     this.scrollToFocusedOptionOnUpdate = false;
   }
+
   componentWillUnmount() {
     this.stopListeningComposition();
     this.stopListeningToTouch();
     document.removeEventListener('scroll', this.onScroll, true);
   }
+
   cacheComponents = (components: SelectComponents) => {
     this.components = defaultComponents({ components });
   };
@@ -452,6 +445,7 @@ export default class Select extends Component<Props, State> {
   onMenuOpen() {
     this.props.onMenuOpen();
   }
+
   onMenuClose() {
     const { isSearchable, isMulti } = this.props;
     this.announceAriaLiveContext({
@@ -461,6 +455,7 @@ export default class Select extends Component<Props, State> {
     this.onInputChange('', { action: 'menu-close' });
     this.props.onMenuClose();
   }
+
   onInputChange(newValue: string, actionMeta: InputActionMeta) {
     this.props.onInputChange(newValue, actionMeta);
   }
@@ -473,6 +468,7 @@ export default class Select extends Component<Props, State> {
     if (!this.inputRef) return;
     this.inputRef.focus();
   }
+
   blurInput() {
     if (!this.inputRef) return;
     this.inputRef.blur();
@@ -507,6 +503,7 @@ export default class Select extends Component<Props, State> {
 
     this.announceAriaLiveContext({ event: 'menu' });
   }
+
   focusValue(direction: 'previous' | 'next') {
     const { isMulti, isSearchable } = this.props;
     const { selectValue, focusedValue } = this.state;
@@ -596,6 +593,7 @@ export default class Select extends Component<Props, State> {
       context: { isDisabled: isOptionDisabled(options[nextFocus]) },
     });
   }
+
   onChange = (newValue: ValueType, actionMeta: ActionMeta) => {
     const { onChange, name } = this.props;
     onChange(newValue, { ...actionMeta, name });
@@ -778,6 +776,7 @@ export default class Select extends Component<Props, State> {
       ? lastFocusedOption
       : options[0];
   }
+
   getOptionLabel = (data: OptionType): string => {
     return this.props.getOptionLabel(data);
   };
@@ -809,9 +808,9 @@ export default class Select extends Component<Props, State> {
   // Helpers
   // ==============================
   announceAriaLiveSelection = ({
-    event,
-    context,
-  }: {
+                                 event,
+                                 context,
+                               }: {
     event: string,
     context: ValueEventContext,
   }) => {
@@ -820,9 +819,9 @@ export default class Select extends Component<Props, State> {
     });
   };
   announceAriaLiveContext = ({
-    event,
-    context,
-  }: {
+                               event,
+                               context,
+                             }: {
     event: string,
     context?: InstructionsContext,
   }) => {
@@ -838,12 +837,15 @@ export default class Select extends Component<Props, State> {
     const { selectValue } = this.state;
     return selectValue.length > 0;
   }
+
   hasOptions() {
     return !!this.state.menuOptions.render.length;
   }
+
   countOptions() {
     return this.state.menuOptions.focusable.length;
   }
+
   isClearable(): boolean {
     const { isClearable, isMulti } = this.props;
 
@@ -853,11 +855,13 @@ export default class Select extends Component<Props, State> {
 
     return isClearable;
   }
+
   isOptionDisabled(option: OptionType, selectValue: OptionsType): boolean {
     return typeof this.props.isOptionDisabled === 'function'
       ? this.props.isOptionDisabled(option, selectValue)
       : false;
   }
+
   isOptionSelected(option: OptionType, selectValue: OptionsType): boolean {
     if (selectValue.indexOf(option) > -1) return true;
     if (typeof this.props.isOptionSelected === 'function') {
@@ -866,6 +870,7 @@ export default class Select extends Component<Props, State> {
     const candidate = this.getOptionValue(option);
     return selectValue.some(i => this.getOptionValue(i) === candidate);
   }
+
   filterOption(
     option: { label: string, value: string, data: OptionType },
     inputValue: string
@@ -874,6 +879,7 @@ export default class Select extends Component<Props, State> {
       ? this.props.filterOption(option, inputValue)
       : true;
   }
+
   formatOptionLabel(data: OptionType, context: FormatOptionLabelContext): Node {
     if (typeof this.props.formatOptionLabel === 'function') {
       const { inputValue } = this.props;
@@ -887,6 +893,7 @@ export default class Select extends Component<Props, State> {
       return this.getOptionLabel(data);
     }
   }
+
   formatGroupLabel(data: GroupType) {
     return this.props.formatGroupLabel(data);
   }
@@ -994,12 +1001,14 @@ export default class Select extends Component<Props, State> {
       document.addEventListener('compositionend', this.onCompositionEnd, false);
     }
   }
+
   stopListeningComposition() {
     if (document && document.removeEventListener) {
       document.removeEventListener('compositionstart', this.onCompositionStart);
       document.removeEventListener('compositionend', this.onCompositionEnd);
     }
   }
+
   onCompositionStart = () => {
     this.isComposing = true;
   };
@@ -1018,6 +1027,7 @@ export default class Select extends Component<Props, State> {
       document.addEventListener('touchend', this.onTouchEnd, false);
     }
   }
+
   stopListeningToTouch() {
     if (document && document.removeEventListener) {
       document.removeEventListener('touchstart', this.onTouchStart);
@@ -1025,6 +1035,7 @@ export default class Select extends Component<Props, State> {
       document.removeEventListener('touchend', this.onTouchEnd);
     }
   }
+
   onTouchStart = ({ touches }: TouchEvent) => {
     const touch = touches.item(0);
     if (!touch) {
@@ -1328,7 +1339,8 @@ export default class Select extends Component<Props, State> {
           data: item,
           options: children,
         };
-      } else {
+      }
+      else {
         const option = toOption(item, `${itemIndex}`);
         if (option && !option.isDisabled) acc.focusable.push(item);
         return option;
@@ -1382,19 +1394,19 @@ export default class Select extends Component<Props, State> {
     // An aria live message representing the currently focused value in the select.
     const focusedValueMsg = focusedValue
       ? valueFocusAriaMessage({
-          focusedValue,
-          getOptionLabel: this.getOptionLabel,
-          selectValue,
-        })
+        focusedValue,
+        getOptionLabel: this.getOptionLabel,
+        selectValue,
+      })
       : '';
     // An aria live message representing the currently focused option in the select.
     const focusedOptionMsg =
       focusedOption && menuIsOpen
         ? optionFocusAriaMessage({
-            focusedOption,
-            getOptionLabel: this.getOptionLabel,
-            options,
-          })
+          focusedOption,
+          getOptionLabel: this.getOptionLabel,
+          options,
+        })
         : '';
     // An aria live message representing the set of focusable results and current searchterm/inputvalue.
     const resultsMsg = resultsAriaMessage({
@@ -1469,6 +1481,7 @@ export default class Select extends Component<Props, State> {
       />
     );
   }
+
   renderPlaceholderOrValue(): ?PlaceholderOrValue {
     const {
       MultiValue,
@@ -1545,6 +1558,7 @@ export default class Select extends Component<Props, State> {
       </SingleValue>
     );
   }
+
   renderClearIndicator() {
     const { ClearIndicator } = this.components;
     const { commonProps } = this;
@@ -1575,6 +1589,7 @@ export default class Select extends Component<Props, State> {
       />
     );
   }
+
   renderLoadingIndicator() {
     const { LoadingIndicator } = this.components;
     const { commonProps } = this;
@@ -1593,6 +1608,7 @@ export default class Select extends Component<Props, State> {
       />
     );
   }
+
   renderIndicatorSeparator() {
     const { DropdownIndicator, IndicatorSeparator } = this.components;
 
@@ -1611,6 +1627,7 @@ export default class Select extends Component<Props, State> {
       />
     );
   }
+
   renderDropdownIndicator() {
     const { DropdownIndicator } = this.components;
     if (!DropdownIndicator) return null;
@@ -1633,6 +1650,7 @@ export default class Select extends Component<Props, State> {
       />
     );
   }
+
   renderMenu() {
     const {
       Group,
@@ -1697,10 +1715,13 @@ export default class Select extends Component<Props, State> {
             id: headingId,
           }}
           label={this.formatGroupLabel(props.data)}
+          menuOptions={menuOptions}
+          isOptionSelected={this.isOptionSelected}
+          group={group}
         >
           {props
             .options
-            .map(option => (option.type === 'group' )
+            .map(option => (option.type === 'group')
               ? (renderGroup(option))
               : (render(option)))
           }
@@ -1787,6 +1808,7 @@ export default class Select extends Component<Props, State> {
       menuElement
     );
   }
+
   renderFormField() {
     const { delimiter, isDisabled, isMulti, name } = this.props;
     const { selectValue } = this.state;
@@ -1798,7 +1820,7 @@ export default class Select extends Component<Props, State> {
         const value = selectValue
           .map(opt => this.getOptionValue(opt))
           .join(delimiter);
-        return <input name={name} type="hidden" value={value} />;
+        return <input name={name} type="hidden" value={value}/>;
       } else {
         const input =
           selectValue.length > 0 ? (
@@ -1811,14 +1833,14 @@ export default class Select extends Component<Props, State> {
               />
             ))
           ) : (
-            <input name={name} type="hidden" />
+            <input name={name} type="hidden"/>
           );
 
         return <div>{input}</div>;
       }
     } else {
       const value = selectValue[0] ? this.getOptionValue(selectValue[0]) : '';
-      return <input name={name} type="hidden" value={value} />;
+      return <input name={name} type="hidden" value={value}/>;
     }
   }
 

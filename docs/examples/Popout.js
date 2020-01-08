@@ -3,8 +3,8 @@ import { Component } from 'react';
 import { jsx } from '@emotion/core';
 import Button from '@atlaskit/button';
 
-import Select from 'react-select';
-import { defaultTheme } from 'react-select';
+import Select from '../../packages/react-select';
+import { defaultTheme } from '../../packages/react-select';
 import { stateOptions } from '../data';
 
 const { colors } = defaultTheme;

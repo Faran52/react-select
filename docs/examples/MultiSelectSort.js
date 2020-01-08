@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Select, { components } from 'react-select';
+import Select, { components } from '../../packages/react-select';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { colourOptions } from '../data';
 

@@ -26,6 +26,7 @@ import {
   CustomGroupHeading,
   CustomValueContainer,
 } from '../../examples';
+import Categorized from '../../examples/Categorized';
 
 
 export default function Components() {
@@ -226,6 +227,21 @@ export default function Components() {
           </ExampleWrapper>
         }
 
+        ### Categorized Group
+
+        Categorized Component that renders the data of a group.
+
+        See [props docs](/props#groupheading) for more details
+
+        ${(
+          <ExampleWrapper
+            label="Categorized Grouped"
+            urlPath="docs/examples/Categorized.js"
+            raw={require('!!raw-loader!../../examples/Categorized.js')}
+          >
+            <Categorized />
+          </ExampleWrapper>
+        )}
         ### IndicatorsContainer
 
         Wraps the indicators. This is one of the two components directly under the

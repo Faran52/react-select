@@ -2,12 +2,12 @@
 
 import React, { Component, type ComponentType } from 'react';
 
-import Select from 'react-select';
-import type { MenuPlacement } from 'react-select/src/types';
+import Select from '../packages/react-select';
+import type { MenuPlacement } from '../packages/react-select/src/types';
 import { H1, Note } from './styled-components';
 import { colourOptions, groupedOptions, optionLength } from './data';
 
-import * as animatedComponents from 'react-select/animated';
+import * as animatedComponents from '../packages/react-select/animated';
 
 type SuiteProps = {
   selectComponent: ComponentType<any>,

@@ -5,8 +5,8 @@ import { jsx } from '@emotion/core';
 import moment from 'moment';
 import chrono from 'chrono-node';
 
-import Select from 'react-select';
-import { components as SelectComponents } from 'react-select';
+import Select from '../../packages/react-select';
+import { components as SelectComponents } from '../../packages/react-select';
 
 const createOptionForDate = d => {
   const date = moment.isMoment(d) ? d : moment(d);
@@ -91,7 +91,6 @@ const daysHeaderStyles = {
 const daysHeaderItemStyles = {
   color: '#999',
   cursor: 'default',
-  display: 'block',
   fontSize: '75%',
   fontWeight: '500',
   display: 'inline-block',

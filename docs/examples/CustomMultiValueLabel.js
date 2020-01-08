@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Tooltip from '@atlaskit/tooltip';
-import Select, { components } from 'react-select';
+import Select, { components } from '../../packages/react-select';
 import { colourOptions } from '../data';
 
 const MultiValueLabel = props => {

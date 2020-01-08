@@ -3,7 +3,7 @@
 import React from 'react';
 import EmojiIcon from '@atlaskit/icon/glyph/emoji';
 import Tooltip from '@atlaskit/tooltip';
-import Select, { components } from 'react-select';
+import Select, { components } from '../../packages/react-select';
 import { colourOptions } from '../data';
 
 const MultiValueRemove = props => {

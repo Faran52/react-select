@@ -46,6 +46,14 @@ export const Note = ({ Tag = 'div', ...props }: { Tag?: string }) => (
   />
 );
 
+export const Ul = ({ css, innerRef, ...props }: Props) => (
+  <ul ref={innerRef} css={{ margin: 0, padding: 0, ...css }} {...props} />
+);
+export const Li = ({ css, innerRef, ...props }: Props) => (
+  <li ref={innerRef} css={{ listStyle: 'none', ...css }} {...props} />
+);
+
+
 export const H1 = (props: any) => <h1 css={{ marginTop: 0 }} {...props} />;
 export const H2 = (props: any) => <h2 css={{ marginTop: '2em' }} {...props} />;
 

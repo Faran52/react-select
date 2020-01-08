@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Select, { components } from 'react-select';
+import Select, { components } from '../../packages/react-select';
 import { colourOptions } from '../data';
 const controlStyles = {
   borderRadius: '1px solid black',

@@ -1,7 +1,8 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@0.2.1/schema.json",
-  "changelog": "./getChangelogEntry",
+  "$schema": "https://unpkg.com/@changesets/config@0.3.0/schema.json",
+  "changelog": "@changesets/cli/changelog",
   "commit": false,
   "linked": [],
-  "access": "public"
+  "access": "public",
+  "baseBranch": "master"
 }

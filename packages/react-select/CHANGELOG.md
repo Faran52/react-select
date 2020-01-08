@@ -1,6 +1,6 @@
 # react-select
 
-## 3.0.8
+## 3.0.9
 
 ### Patch Changes
 

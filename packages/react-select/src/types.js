@@ -111,6 +111,7 @@ export type FocusDirection =
 export type OptionProps = PropsWithInnerRef & {
   data: any,
   id: number,
+  key: string,
   index: number,
   isDisabled: boolean,
   isFocused: boolean,
@@ -119,4 +120,9 @@ export type OptionProps = PropsWithInnerRef & {
   onClick: MouseEventHandler,
   onMouseOver: MouseEventHandler,
   value: any,
+};
+
+export type MenuOptions = {
+  render: Array<OptionType>,
+  focusable: Array<OptionType>,
 };

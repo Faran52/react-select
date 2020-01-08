@@ -4,7 +4,7 @@ import { Component } from 'react';
 import CodeSandboxer from 'react-codesandboxer';
 import { CodeBlock } from './markdown/renderer';
 import pkg from '../packages/react-select/package.json';
-import { defaultTheme } from 'react-select';
+import { defaultTheme } from '../packages/react-select';
 import Svg from './Svg';
 
 const { colors } = defaultTheme;

@@ -3,7 +3,7 @@
 import { type Node, type ComponentType } from 'react';
 import { jsx } from '@emotion/core';
 
-import type { CommonProps } from '../types';
+import type { CommonProps, MenuOptions, OptionsType } from '../types';
 
 type ComponentProps = {
   /** The children to be rendered. */
@@ -14,6 +14,8 @@ type ComponentProps = {
   headingProps: any,
   /** Label to be displayed in the heading component. */
   label: Node,
+  menuOptions: MenuOptions,
+  selectValue: OptionsType,
 };
 export type GroupProps = CommonProps & ComponentProps;
 

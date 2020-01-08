@@ -13,7 +13,7 @@ import {
   CreatableSingle,
   FixedOptions,
   StyledMulti,
-  StyledSingle,
+  StyledSingle, Categorized,
 } from '../../examples';
 
 export default function Home() {
@@ -82,6 +82,16 @@ export default function Home() {
       raw={require('!!raw-loader!../../examples/BasicGrouped.js')}
     >
       <BasicGrouped />
+    </ExampleWrapper>
+  )}
+
+ ${(
+    <ExampleWrapper
+      label="Categorized Grouped"
+      urlPath="docs/examples/Categorized.js"
+      raw={require('!!raw-loader!../../examples/Categorized.js')}
+    >
+      <Categorized />
     </ExampleWrapper>
   )}
 
