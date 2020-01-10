@@ -50,6 +50,9 @@ export default function Home() {
     </ExampleWrapper>
   )}
 
+  <br/>
+  <br/>
+
   ## Getting Started
 
   Start by installing \`react-select\`
