@@ -9,7 +9,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JedWatson/react-select.git"
+    "url": "https://github.com/faran52/react-select.git"
   },
   "dependencies": {
     "@babel/runtime": "^7.4.4",
