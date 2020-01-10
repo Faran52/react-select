@@ -1,7 +1,7 @@
 {
   "name": "react-select-nested-group",
   "private": false,
-  "version": "3.1.2",
+  "version": "3.1.2.1",
   "description": "A Select control built with and for ReactJS",
   "author": "Jed Watson",
   "license": "MIT",
@@ -145,7 +145,7 @@
   "bugs": {
     "url": "https://github.com/JedWatson/react-select/issues"
   },
-  "homepage": "https://github.com/JedWatson/react-select#readme",
+  "homepage": "https://github.com/faran52/react-select#readme",
   "main": ".eslintrc.js",
   "directories": {
     "doc": "docs"
